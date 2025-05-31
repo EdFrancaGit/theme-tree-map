@@ -104,13 +104,24 @@ const sampleData = {
       }
     ]
   }
-  // Add more themes and their related data as needed
+  // You can add more themes here
 };
 
 // Function to generate and draw the tree map
 function generateTree() {
   const theme = document.getElementById('themeInput').value.trim();
-  const data = sampleData[theme] || { name: theme, children: [] };
+  let data = sampleData[theme];
+
+  // If theme not found, create a fallback node
+  if (!data) {
+    data = {
+      name: theme,
+      children: [
+        { name: "No data available" }
+      ]
+    };
+  }
+
   drawTree(data);
 }
 
@@ -145,14 +156,4 @@ function drawTree(data) {
   const node = svg.selectAll('g.node')
     .data(root.descendants())
     .enter()
-    .append('g')
-    .attr('transform', d => `translate(${d.y},${d.x})`);
-
-  node.append('circle')
-    .attr('r', 5)
-    .attr('fill', '#999');
-
-  node.append('text')
-    .attr('dy', 3)
-    .attr('x', d => d.children ? -10 : 10)
-    .style('text-anchor', d =>
+    .
